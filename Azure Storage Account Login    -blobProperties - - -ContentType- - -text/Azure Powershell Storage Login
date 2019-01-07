@@ -1,0 +1,6 @@
+    $blobProperties = @{ "ContentType" = "text/plain"}
+
+    $storageAccountKey = (Get-AzureRMStorageAccountKey -ResourceGroupName $StorageResourceGroup -AccountName  $StorageAccountName).Value[0]
+
+  
+    $azureStorageContext = New-AzureStorageContext -StorageAccountName $StorageAccountName  -StorageAccountKey $storageAccountKey
