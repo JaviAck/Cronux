@@ -1,0 +1,25 @@
+function LogIn
+{ 
+    try
+    {
+        $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
+
+        "Haciendo Log In en Azure"
+        Add-AzureRmAccount `
+            -ServicePrincipal `
+            -TenantId $servicePrincipalConnection.TenantId `
+            -ApplicationId $servicePrincipalConnection.ApplicationId `
+            -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+    } catch 
+    {
+        if (!$servicePrincipalConnection)
+        {
+            $ErrorMessage = "Conexión $connectionName no existe."
+            throw $ErrorMessage
+        } else
+        {
+            Write-Error -Message $_.Exception
+            throw $_.Exception
+        }
+    }
+}
